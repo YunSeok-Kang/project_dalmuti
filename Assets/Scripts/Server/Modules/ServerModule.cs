@@ -30,5 +30,10 @@ namespace Networking
             C2SProxy = proxy;
             S2CStub = stub;
         }
+
+        protected virtual bool Init()
+        {
+            return true;
+        }
     }
 }

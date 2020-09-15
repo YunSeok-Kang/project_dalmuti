@@ -12,9 +12,9 @@ namespace Networking
             Init();
         }
 
-        private void Init()
+        protected override bool Init()
         {
-            S2CStub.ReplyLogon = (Nettention.Proud.HostID remote, Nettention.Proud.RmiContext rmiContext, int result, System.String comment) =>
+            S2CStub.ReplyLogon = (HostID remote, RmiContext rmiContext, int result, System.String comment) =>
             {
                 //this.groupID = (HostID)groupID;
 
@@ -34,6 +34,8 @@ namespace Networking
 
                 return true;
             };
+
+            return true;
         }
 
         public void Connect(string ip, ushort port, string nickName, string roomName)
