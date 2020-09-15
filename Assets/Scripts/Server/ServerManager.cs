@@ -25,13 +25,20 @@ namespace Networking
             get; private set;
         }
 
+        public SMGameRoom ModuleGameRoom
+        {
+            get; private set;
+        }
+
         // ----------------------------------------- Unity Events ----------------------------------------- //
         private void Awake()
         {
             _netClient.AttachProxy(_c2sProxy);
             _netClient.AttachStub(_s2cStub);
 
+            // RoomConnect가 common proxt, stub를 몰라도 되도록 구조 변경하자.
             ModuleRoomConnect = new SMRoomConnect(_netClient, _c2sProxy, _s2cStub);
+            ModuleGameRoom = new SMGameRoom(_netClient, _c2sProxy, _s2cStub);
         }
 
         // Start is called before the first frame update
