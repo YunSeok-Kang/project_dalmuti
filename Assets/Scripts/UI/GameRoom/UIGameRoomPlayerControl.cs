@@ -54,6 +54,8 @@ public class UIGameRoomPlayerControl : MonoBehaviour
     {
         UIGameRoomPlayerInfo playerInfo = _playerInfoDict[client];
         ObjectPoolingManager.Instance.ReturnObject("PlayerInfo", playerInfo.gameObject);
+
+        _playerInfoDict.Remove(client);
     }
 
     private void OnUserReady(GameRoomClient client)
