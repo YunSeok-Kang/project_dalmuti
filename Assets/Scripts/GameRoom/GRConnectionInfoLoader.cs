@@ -9,7 +9,7 @@ public class GRConnectionInfoLoader : MonoBehaviour
     {
         SMRoomConnect.ConnectionInfo connectionInfo = ServerManager.Instance.ModuleRoomConnect.LastConnectionInfo;
 
-        GameRoomClient myClient = new GameRoomClient();
+        GameRoomClient myClient = new GameRoomClient(connectionInfo.nickname);
         myClient.isMine = true;
 
         GameRoomManager.Instance.AddClientInfo(connectionInfo.nickname, myClient);
