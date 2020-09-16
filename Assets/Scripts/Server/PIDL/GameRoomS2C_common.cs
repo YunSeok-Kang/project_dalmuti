@@ -16,11 +16,13 @@ namespace GameRoomS2C
 			public const Nettention.Proud.RmiID NotifyUserConnected = (Nettention.Proud.RmiID)8000+1;
 			public const Nettention.Proud.RmiID NotifyUserDisconnected = (Nettention.Proud.RmiID)8000+2;
 			public const Nettention.Proud.RmiID NotifyUserReady = (Nettention.Proud.RmiID)8000+3;
+			public const Nettention.Proud.RmiID NotifyGameStarted = (Nettention.Proud.RmiID)8000+4;
 		// List that has RMI ID.
 		public static Nettention.Proud.RmiID[] RmiIDList = new Nettention.Proud.RmiID[] {
 			NotifyUserConnected,
 			NotifyUserDisconnected,
 			NotifyUserReady,
+			NotifyGameStarted,
 		};
 	}
 }

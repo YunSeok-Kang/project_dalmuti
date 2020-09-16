@@ -93,12 +93,37 @@ Nettention.Proud.Marshaler.Write(__msg, nickname);
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyUserReady, Common.NotifyUserReady);
 }
+public bool NotifyGameStarted(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+		__msg.SimplePacketMode = core.IsSimplePacketMode();
+		Nettention.Proud.RmiID __msgid= Common.NotifyGameStarted;
+		__msg.Write(__msgid);
+		
+	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
+	__list[0] = remote;
+		
+	return RmiSend(__list,rmiContext,__msg,
+		RmiName_NotifyGameStarted, Common.NotifyGameStarted);
+}
+
+public bool NotifyGameStarted(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext)
+{
+	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
+__msg.SimplePacketMode = core.IsSimplePacketMode();
+Nettention.Proud.RmiID __msgid= Common.NotifyGameStarted;
+__msg.Write(__msgid);
+		
+	return RmiSend(remotes,rmiContext,__msg,
+		RmiName_NotifyGameStarted, Common.NotifyGameStarted);
+}
 #if USE_RMI_NAME_STRING
 // RMI name declaration.
 // It is the unique pointer that indicates RMI name such as RMI profiler.
 public const string RmiName_NotifyUserConnected="NotifyUserConnected";
 public const string RmiName_NotifyUserDisconnected="NotifyUserDisconnected";
 public const string RmiName_NotifyUserReady="NotifyUserReady";
+public const string RmiName_NotifyGameStarted="NotifyGameStarted";
        
 public const string RmiName_First = RmiName_NotifyUserConnected;
 #else
@@ -107,6 +132,7 @@ public const string RmiName_First = RmiName_NotifyUserConnected;
 public const string RmiName_NotifyUserConnected="";
 public const string RmiName_NotifyUserDisconnected="";
 public const string RmiName_NotifyUserReady="";
+public const string RmiName_NotifyGameStarted="";
        
 public const string RmiName_First = "";
 #endif
