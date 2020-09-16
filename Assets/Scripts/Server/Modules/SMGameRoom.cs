@@ -21,6 +21,7 @@ namespace Networking
         public GameRoomEventWithBool OnUserConnected = new GameRoomEventWithBool();
         public GameRoomEvent OnUserDIsconnected = new GameRoomEvent();
         public GameRoomEvent OnUserReady = new GameRoomEvent();
+        public UnityEvent OnGameStarted = new UnityEvent();
 
         public SMGameRoom(NetClient target, CommonC2S.Proxy proxy, CommonS2C.Stub stub) : base(target, proxy, stub)
         {
@@ -52,6 +53,13 @@ namespace Networking
             {
                 Debug.Log("플레이어 " + nickname + "가 준비를 마쳤습니다.");
                 OnUserReady.Invoke(nickname);
+                return true;
+            };
+
+            _gameRoomS2CStub.NotifyGameStarted = (Nettention.Proud.HostID remote, Nettention.Proud.RmiContext rmiContext) =>
+            {
+                Debug.Log("게임이 시작됩니다.");
+                OnGameStarted.Invoke();
                 return true;
             };
 
