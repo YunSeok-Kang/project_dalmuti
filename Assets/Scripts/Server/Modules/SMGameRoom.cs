@@ -19,6 +19,7 @@ namespace Networking
 
         public GameRoomEvent OnUserConnected = new GameRoomEvent();
         public GameRoomEvent OnUserDIsconnected = new GameRoomEvent();
+        public GameRoomEvent OnUserReady = new GameRoomEvent();
 
         public SMGameRoom(NetClient target, CommonC2S.Proxy proxy, CommonS2C.Stub stub) : base(target, proxy, stub)
         {
@@ -52,6 +53,11 @@ namespace Networking
             };
 
             return true;
+        }
+
+        public void RequestReady()
+        {
+            _gameRoomC2SProxy.RequestUserReady(HostID.HostID_Server, RmiContext.ReliableSend);
         }
     }
 }
