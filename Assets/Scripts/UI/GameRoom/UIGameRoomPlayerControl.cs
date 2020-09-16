@@ -42,8 +42,9 @@ public class UIGameRoomPlayerControl : MonoBehaviour
     {
         GameObject playerInfoObject = ObjectPoolingManager.Instance.GetObject("PlayerInfo");
         UIGameRoomPlayerInfo playerInfo = playerInfoObject.GetComponent<UIGameRoomPlayerInfo>();
-        playerInfo.nicknameText.text = client.nickname;
-        playerInfo.readyImage.gameObject.SetActive(client.isReady);
+        playerInfo.SetNickname(client.nickname);
+        Debug.Log("client: " + client.isReady);
+        playerInfo.SetReady(client.isReady);
 
         playerInfoObject.transform.parent = parent;
 
@@ -61,6 +62,6 @@ public class UIGameRoomPlayerControl : MonoBehaviour
     private void OnUserReady(GameRoomClient client)
     {
         UIGameRoomPlayerInfo playerInfo = _playerInfoDict[client];
-        playerInfo.readyImage.gameObject.SetActive(true);
+        playerInfo.SetReady(client.isReady);
     }
 }
