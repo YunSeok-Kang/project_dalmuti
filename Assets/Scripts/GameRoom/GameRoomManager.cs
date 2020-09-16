@@ -16,7 +16,7 @@ public class GameRoomManager : MonoSingleton<GameRoomManager>
 
     private Dictionary<string, GameRoomClient> _gameRoomDict = new Dictionary<string, GameRoomClient>();
     private Dictionary<string, bool> _gameReadyStateDict = new Dictionary<string, bool>();
-    private string _myNickname = null;
+    public string myNickname = null;
 
     private bool _activateEvents = false;
     private Queue<GameRoomClient> _userConnectedEventQueue = new Queue<GameRoomClient>();
@@ -73,7 +73,7 @@ public class GameRoomManager : MonoSingleton<GameRoomManager>
 
         if (client.isMine)
         {
-            _myNickname = nickName;
+            myNickname = nickName;
         }
 
         _gameRoomDict.Add(nickName, client);
@@ -84,7 +84,7 @@ public class GameRoomManager : MonoSingleton<GameRoomManager>
 
     public void AddReadyInfo(string nickname)
     {
-
+        OnUserGameReady(nickname);
     }
 
     private void OnUserConnect(string nickName)
