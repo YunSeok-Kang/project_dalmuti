@@ -37,6 +37,7 @@ public class GameRoomManager : MonoSingleton<GameRoomManager>
         ServerManager.Instance.ModuleGameRoom.OnUserConnected.AddListener(OnUserConnect);
         ServerManager.Instance.ModuleGameRoom.OnUserDIsconnected.AddListener(OnUserDisconnect);
         ServerManager.Instance.ModuleGameRoom.OnUserReady.AddListener(OnUserGameReady);
+        ServerManager.Instance.ModuleGameRoom.OnGameStarted.AddListener(OnGameStarted);
     }
 
     // Update is called once per frame
@@ -62,6 +63,12 @@ public class GameRoomManager : MonoSingleton<GameRoomManager>
         }
     }
 
+    private void OnGameStarted()
+    {
+        // temp
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Gameplay_PC");
+    }
+
     /// <summary>
     /// 클라이언트 정보를 GameRoomManager에 추가.
     /// </summary>
@@ -82,10 +89,10 @@ public class GameRoomManager : MonoSingleton<GameRoomManager>
         //OnUserConnected.Invoke(client);
     }
 
-    public void AddReadyInfo(string nickname)
-    {
-        OnUserGameReady(nickname);
-    }
+    //public void AddReadyInfo(string nickname)
+    //{
+    //    OnUserGameReady(nickname);
+    //}
 
     private void OnUserConnect(string nickName, bool isReady)
     {
@@ -121,20 +128,27 @@ public class GameRoomManager : MonoSingleton<GameRoomManager>
 
     private void OnUserGameReady(string nickname)
     {
+        Debug.Log("OnUserGameReady: " + nickname);
+
         bool isReady;
         bool hasValue = _gameReadyStateDict.TryGetValue(nickname, out isReady);
         if (!hasValue)
         {
             _gameReadyStateDict.Add(nickname, true);
+            Debug.Log("!hasValue");
         }
         else if (!isReady)
         {
             _gameReadyStateDict[nickname] = true;
+            Debug.Log("!IsReady");
         }
         else
         {
             return;
         }
+
+        _gameRoomDict[nickname].isReady = true;
+        Debug.Log("GameRoomDict: " + _gameRoomDict[nickname].isReady);
 
         // Ready 이벤트가 호출되는 순서 상, _gameRoomDict에 정보가 등록된 후일 확률이 매우 높음(99.9%)
         // 따라서 Dictionary에서 다른 검사 없이 그냥 가지고 옴.
