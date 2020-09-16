@@ -16,8 +16,8 @@ namespace GameRoomS2C
 public AfterRmiInvocationDelegate AfterRmiInvocation = delegate(Nettention.Proud.AfterRmiSummary summary) {};
 public BeforeRmiInvocationDelegate BeforeRmiInvocation = delegate(Nettention.Proud.BeforeRmiSummary summary) {};
 
-		public delegate bool NotifyUserConnectedDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, String nickname);  
-		public NotifyUserConnectedDelegate NotifyUserConnected = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, String nickname)
+		public delegate bool NotifyUserConnectedDelegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, String nickname, bool isReady);  
+		public NotifyUserConnectedDelegate NotifyUserConnected = delegate(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, String nickname, bool isReady)
 		{ 
 			return false;
 		};
@@ -76,11 +76,13 @@ __fail:
         ctx.compressMode = pa.CompressMode;
 
         String nickname; Nettention.Proud.Marshaler.Read(__msg,out nickname);	
+bool isReady; Nettention.Proud.Marshaler.Read(__msg,out isReady);	
 core.PostCheckReadMessage(__msg, RmiName_NotifyUserConnected);
         if(enableNotifyCallFromStub==true)
         {
         string parameterString = "";
         parameterString+=nickname.ToString()+",";
+parameterString+=isReady.ToString()+",";
         NotifyCallFromStub(Common.NotifyUserConnected, RmiName_NotifyUserConnected,parameterString);
         }
 
@@ -97,7 +99,7 @@ core.PostCheckReadMessage(__msg, RmiName_NotifyUserConnected);
         long t0 = Nettention.Proud.PreciseCurrentTime.GetTimeMs();
 
         // Call this method.
-        bool __ret =NotifyUserConnected (remote,ctx , nickname );
+        bool __ret =NotifyUserConnected (remote,ctx , nickname, isReady );
 
         if(__ret==false)
         {

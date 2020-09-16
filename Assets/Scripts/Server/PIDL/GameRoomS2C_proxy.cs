@@ -13,13 +13,14 @@ namespace GameRoomS2C
 {
 	internal class Proxy:Nettention.Proud.RmiProxy
 	{
-public bool NotifyUserConnected(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, String nickname)
+public bool NotifyUserConnected(Nettention.Proud.HostID remote,Nettention.Proud.RmiContext rmiContext, String nickname, bool isReady)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 		__msg.SimplePacketMode = core.IsSimplePacketMode();
 		Nettention.Proud.RmiID __msgid= Common.NotifyUserConnected;
 		__msg.Write(__msgid);
 		Nettention.Proud.Marshaler.Write(__msg, nickname);
+		Nettention.Proud.Marshaler.Write(__msg, isReady);
 		
 	Nettention.Proud.HostID[] __list = new Nettention.Proud.HostID[1];
 	__list[0] = remote;
@@ -28,13 +29,14 @@ public bool NotifyUserConnected(Nettention.Proud.HostID remote,Nettention.Proud.
 		RmiName_NotifyUserConnected, Common.NotifyUserConnected);
 }
 
-public bool NotifyUserConnected(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, String nickname)
+public bool NotifyUserConnected(Nettention.Proud.HostID[] remotes,Nettention.Proud.RmiContext rmiContext, String nickname, bool isReady)
 {
 	Nettention.Proud.Message __msg=new Nettention.Proud.Message();
 __msg.SimplePacketMode = core.IsSimplePacketMode();
 Nettention.Proud.RmiID __msgid= Common.NotifyUserConnected;
 __msg.Write(__msgid);
 Nettention.Proud.Marshaler.Write(__msg, nickname);
+Nettention.Proud.Marshaler.Write(__msg, isReady);
 		
 	return RmiSend(remotes,rmiContext,__msg,
 		RmiName_NotifyUserConnected, Common.NotifyUserConnected);
