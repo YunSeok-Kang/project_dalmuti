@@ -22,7 +22,7 @@ public class GRGameReadyRequester : MonoBehaviour
     /// </summary>
     public void RequestReady()
     {
-        GameRoomManager.Instance.AddReadyInfo(GameRoomManager.Instance.myNickname);
+        //GameRoomManager.Instance.AddReadyInfo(GameRoomManager.Instance.myNickname);
         ServerManager.Instance.ModuleGameRoom.RequestReady();
     }
 }
