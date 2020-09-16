@@ -43,6 +43,7 @@ public class UIGameRoomPlayerControl : MonoBehaviour
         GameObject playerInfoObject = ObjectPoolingManager.Instance.GetObject("PlayerInfo");
         UIGameRoomPlayerInfo playerInfo = playerInfoObject.GetComponent<UIGameRoomPlayerInfo>();
         playerInfo.nicknameText.text = client.nickname;
+        playerInfo.readyImage.gameObject.SetActive(client.isReady);
 
         playerInfoObject.transform.parent = parent;
 

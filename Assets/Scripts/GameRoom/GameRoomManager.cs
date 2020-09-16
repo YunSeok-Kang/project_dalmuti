@@ -87,7 +87,7 @@ public class GameRoomManager : MonoSingleton<GameRoomManager>
         OnUserGameReady(nickname);
     }
 
-    private void OnUserConnect(string nickName)
+    private void OnUserConnect(string nickName, bool isReady)
     {
         Debug.Log("OnUserConnect");
 
@@ -95,6 +95,8 @@ public class GameRoomManager : MonoSingleton<GameRoomManager>
         if (!_gameRoomDict.TryGetValue(nickName, out gameClient))
         {
             gameClient = new GameRoomClient(nickName);
+            gameClient.isReady = isReady;
+
             _gameRoomDict.Add(nickName, gameClient);
             _userConnectedEventQueue.Enqueue(gameClient);
 

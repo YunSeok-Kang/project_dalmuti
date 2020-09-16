@@ -11,13 +11,14 @@ namespace Networking
     public class SMGameRoom : ServerModule
     {
         public class GameRoomEvent : UnityEvent<string> { }
+        public class GameRoomEventWithBool : UnityEvent<string, bool> { }
 
         private NetClient _targetClient;
 
         private GameRoomC2S.Proxy _gameRoomC2SProxy = new GameRoomC2S.Proxy();
         private GameRoomS2C.Stub _gameRoomS2CStub = new GameRoomS2C.Stub();
 
-        public GameRoomEvent OnUserConnected = new GameRoomEvent();
+        public GameRoomEventWithBool OnUserConnected = new GameRoomEventWithBool();
         public GameRoomEvent OnUserDIsconnected = new GameRoomEvent();
         public GameRoomEvent OnUserReady = new GameRoomEvent();
 
@@ -33,10 +34,10 @@ namespace Networking
             _targetClient.AttachProxy(_gameRoomC2SProxy);
             _targetClient.AttachStub(_gameRoomS2CStub);
 
-            _gameRoomS2CStub.NotifyUserConnected = (Nettention.Proud.HostID remote, Nettention.Proud.RmiContext rmiContext, String nickname) =>
+            _gameRoomS2CStub.NotifyUserConnected = (Nettention.Proud.HostID remote, Nettention.Proud.RmiContext rmiContext, String nickname, bool isReady) =>
             {
                 Debug.Log("접속자: " + nickname);
-                OnUserConnected.Invoke(nickname);
+                OnUserConnected.Invoke(nickname, isReady);
                 return true;
             };
 
@@ -49,6 +50,8 @@ namespace Networking
 
             _gameRoomS2CStub.NotifyUserReady = (Nettention.Proud.HostID remote, Nettention.Proud.RmiContext rmiContext, String nickname) =>
             {
+                Debug.Log("플레이어 " + nickname + "가 준비를 마쳤습니다.");
+                OnUserReady.Invoke(nickname);
                 return true;
             };
 

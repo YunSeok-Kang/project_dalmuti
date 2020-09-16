@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameRoomClient
 {
     public string nickname;
+    public bool isReady;
 
     public bool isMine;
 
